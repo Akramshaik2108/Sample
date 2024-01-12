@@ -1,0 +1,198 @@
+<html>
+    <title> XML Sample</title>
+    <meta name="viewpoint" content="width device width, initial scale 1.0">
+    <link rel="stylesheet" href="style.css">
+    <body>
+        <div>
+        <p style="text-align: justify;">limitations of the perceptron), the modular parity problem tests the expressiveness and
+flexibility of a learning system when dealing with heterogeneous data.</p><br>
+        <h2>Subproblem Definition</h2>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;This section summarizes the role of attribute partitioning in defining intermediate concepts and subtasks of decomposable time series learning tasks, which can be mapped to the appropriate submodels.</p><br>
+        <h2>Intermediate Concepts and Attribute-Driven
+Decomposition</h2>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;In both attribute subset selection and partitioning, attributes are grouped into subsets that are relevant to a particular task: the overall learning task or a subtask. Each subtask for a partitioned attribute set has its own inputs (the attribute subset) and its own <i> intermediate concept</i>. This intermediate concept can be discovered using unsupervised learning algorithms, such as <i> k-means clustering</i>. Other methods, such as competitive clustering or vector quantization (using radial basis functions (Lowe, 1995; Hassoun, 1995; Haykin, 1999), neural trees (Li <i> et al</i>., 1993), and similar models (Duda <i>et al</i>., 2000; Ray & Hsu, 1998), principal components analysis (Watanabe, 1985; Hassoun, 1995; Haykin, 1999), Karhunen-Loève transforms (Watanabe, 1985, Hassoun, 1995), or factor analysis (Watanabe, 1985; Duda <i>et al</i>., 2000), can also be used.</p> 
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Attribute partitioning is used to control the formation of intermediate concepts in this system. Attribute subset selection yields a single, reformulated learning problem (whose intermediate concept is neither necessarily different from the original concept, nor intended to differ). By contrast, attribute partitioning yields multiple learning <i>subproblems</i> (whose intermediate concepts may or may not differ, but are simpler by design when they do differ).</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The goal of this approach is to find a natural and principled way to specify how
+intermediate concepts should be simpler than the overall concept. In the next section,
+two mixture models are presented: the <i><b>H</b>ierarchical Mixture of Experts</i> (HME) of Jordan
+and Jacobs (1994), and the <i><b>S</b>pecialist-Moderator</i> (SM) network of Ray and Hsu (Ray &
+Hsu, 1998; Hsu <i>et al</i>., 2000). The following sections explain and illustrate why this design
+choice is a critically important consideration in how a hierarchical learning model is built,
+and how it affects the performance of multi-strategy approaches to learning from
+heterogeneous time series. The mechanisms by which HME and SM networks perform
+data fusion, and how this process is affected by attribute partitioning, are examined in
+both theoretical and experimental terms in this chapter. Finally, a survey of experiments
+by the author investigates the empirical effects of attribute partitioning on learning
+performance, including its indirect effects through intermediate concept formation.</p><br>
+        <h2>Role of Attribute Partitioning in Model Selection</h2>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;<i>Model selection</i>, the process of choosing a hypothesis class that has the appropriate
+complexity for the given training data (Geman <i>et al</i>., 1992; Schuurmans, 1997), is a consequent of attribute-driven problem decomposition. It is also one of the original
+directives for performing decomposition (i.e., to apply the appropriate learning algorithm
+to each homogeneous subtask). Attribute partitioning is a determinant of subtasks,
+because it specifies new (restricted) views of the input and new target outputs for each
+model. Thus, it also determines, indirectly, what models are called for. This system
+organization may be described as a <i>wrapper</i> system <i>cf</i>. (Kohavi & John, 1997) whose
+primary adjustable parameter is the attribute partition. A second parameter is a high-level
+model descriptor (the architecture and type of hierarchical <i>classifier fusion model)</i>.</p><br>
+        <h2>Machine Learning Methodologies: Models and
+Algorithms</h2>
+            <p style=italic;><i>Recurrent Neural Networks and Statistical Time Series Models</i></p>
+           <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;SRNs, TDNNs, and gamma networks (Mehrotra et al., 1997) are all temporal varieties
+of artificial neural networks (ANNs). A temporal naïve Bayesian network is a restricted
+type of Bayesian network called a global knowledge map as defined by Heckerman
+(1991), which has two stipulations. The first is that some random variables may be
+temporal (e.g., they may denote the durations or rates of change of original variables).
+The second is that the topological structure of the Bayesian network is learned by naïve
+Bayes. A hidden Markov model (HMM) is a stochastic state transition diagram whose
+transitions are also annotated with probability distributions over output symbols (Lee,
+               1989).</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The primary criterion used to characterize a stochastic process in my multi-strategy
+time series learning system is its <i> memory form</i>. To determine the memory form for temporal
+ANNs, two properties of statistical time series models are exploited. The first property
+is that the temporal pattern represented by a memory form can be described as a
+<i>convolutional code</i>. That is, past values of a time series are stored by a particular type
+of recurrent ANN, which transforms the original data into its internal representation. This
+transformation can be formally defined in terms of a <i>kernel function</i> that is convolved
+over the time series. This convolutional or functional definition is important because it
+yields a general mathematical characterization for individually weighted “windows” of
+past values (time delay or <i>resolution</i>) and nonlinear memories that “fade” smoothly
+(attenuated decay, or <i>depth</i>) (Mozer, 1994; Principé & Lefebvre, 2001; Principé & deVries,
+1992). It is also important to metric-based model selection, because it concretely
+describes the transformed time series that we should evaluatein order to compare memory
+forms and choose the most effective one. The second property is that a transformed time
+series can be evaluated by measuring the change in <i>conditional entropy</i> (Cover &
+Thomas, 1991) for the stochastic process of which the training data is a sample. The
+entropy of the next value conditioned on past values of the original data should, in
+general, be higher than that of the next value conditioned on past values of the
+<i>transformed</i> data. This indicates that the memory form yields an improvement in
+predictive capability, which is ideally proportional to the expected performance of the
+model being evaluated.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Given an input sequence x(t) with components {xˆ i (t),1≤ i ≤ n}, its convolution xˆ i (t)
+                with a kernel function ci(t) (specific to the ith component of the model) is defined as follows:</p>
+           <p><img src="images\Formula.jpeg" alt="Description of the image"></p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;(Each x or xi value contains all the attributes in one subset of a partition.)(Each x or xi value contains all the attributes in one subset of a partition.)</p>
+           <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Kernel functions for simple recurrent networks, Gamma memories, and are presented
+in the context of convolutional codes and time series learning by Mozer (1994), Mehrotra
+<i>et al</i>. (1997), and Hsu (1998). The interested reader may also refer to data sets such as
+the Santa Fe corpus (Gershenfeld & Weigend, 1994) and ANN simulation software for
+additional information; readers new to this family of learning models are encouraged to
+               experiment with such test corpora and codes in order to gain basic experience.</p><br>
+            <h2>Evolutionary Computation: Genetic Algorithms and
+Genetic Programming</h2>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The notion of using evolutionary computation to improve the representation of
+learning problems in KD draws from foundational work on controlling genetic algorithms
+and finds applications in evolutionary control and data mining using genetic algorithms
+                as inducers.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;In the field of evolutionary computation, many aspects of the genetic coding and
+evolutionary system can be tuned automatically. Much of the recent research has
+focused on this meta-optimization problem and has led to both theoretical and empirical
+results on population sizing (Horn, 1997), probability of selection, crossover, and
+mutation (Goldberg, 1998), and parallel, distributed load balancing in genetic algorithms
+(Cantu-Paz, 1999). Genetic algorithms that tune some of their own hyperparameters are
+referred to in the literature as parameterless (Harik & Lobo, 1997). This idea has also been
+used to develop genetic wrappers for performance enhancement in KD, an innovation
+dating back to the first applications of genetic algorithms to inductive learning (Booker,
+                Goldberg, & Holland, 1989; Dejong et al., 1993; Goldberg, 1989).</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;We seek to optimize the representation and preference biases of a learning system
+for KD. Therefore, we are interested in four kinds of hyperparameter: input descriptors,
+output descriptors, specifications for what kind of committee machine or ensemble
+architecture to use, and control variables for the search algorithm (the choice of search
+algorithm itself, heuristic coefficients, and hyperparameters in various learning frameworks).
+The first three kinds of hyperparameter control are representation bias, the
+fourth, preference bias. (Witten & Frank, 2000) This distinction is important in our study
+of evolutionary computation because it generates requirements for coding and fitness
+evaluation in our specification of combinatorial optimization problems. For example,
+finding intermediate learning targets can be formulated as an unsupervised learning
+problem, and the gene expression of an evolved selector, partition, or construction rule
+                or program for describing these target outputs shall differ from that for inputs.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Koza (1992) defines five specification components for a GP system: determining the
+terminal set, function set, fitness cases or evaluation function, termination conditions,
+and result. The process of determining these drives the design of a GP-based wrapper.
+In data mining with evolutionary algorithms, many direct approaches have been madetoward constructive induction; selecting and extracting features is very natural with a
+genetic algorithm because the hyperparameters (e.g., feature subsets) can be encoded
+as bit strings and, provided the proper parallel and distributed computing system is used,
+the task of evaluating fitness based upon model criteria and statistical validation data
+is trivially parallelizable. Similarly, with the proper encoding of synthetic variables as
+symbolic (e.g., logical or arithmetic) expressions over the original ground variables, GP
+                is well suited to performing feature construction by combinatorial optimization.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;There is a extensive but diffuse literature on hierarchical learning(especially in areas
+of biologically inspired computing where it is studied in contexts of neural modularity
+and hierarchy; niching, speciation, and demes) and artificial societies. In contrast, the
+concept of divide-and-conquer algorithms is pervasively and thoroughly studied. This
+line of research aims toward raising the understanding of layered learning in soft
+computing to such a level, particularly for evolutionary computation in KD and reinforcement
+                learning over large spatial and temporal databases.</p><br>
+            <h1 style="text-align:center;">METHODOLOGIES</h1>
+            <h2>Metric-Based Model Selection in Time Series
+Learning</h2>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;For time series, we are interested in actually identifying a stochastic process from
+the training data (i.e., a process that generates the observations). The performance
+element, time series classification, will then apply a model of this process to a continuation
+of the input (i.e., “test” data) to generate predictions. The question addressed in
+this section is: “To what degree does the training data (or a restriction of that data to a
+subset of attributes) probabilistically match a prototype of some known stochastic
+process?” This is the purpose of metric-based model selection— to estimate the degree
+of match between a subset of the observed data and a known prototype. Prototypes, in
+this framework, are memory forms (Mozer, 1994), and manifest as embedded patterns
+generated by the stochastic process that the memory form describes. For example, an
+exponential trace memory form can express certain types of MA(1) processes. The kernel
+function for this process is given in Hsu (1998). The more precisely a time series can be
+described in terms of exponential processes (wherein future values depend on exponential
+growth or decay of previous values), the more strongly it will match this memory form.
+The stronger this match, the better the expected performance of an MA(1) learning model,
+such as an input recurrent (IR) network. Therefore, a metric that measures this degree
+                of match on an arbitrary time series is a useful predictor of IR network performance.</p><br>
+            <h2>Control of Representation Bias: A Time-SeriesLearning Example</h2>
+ <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Table 1 lists five learning representations, each exemplifying a type of <i>representation</i>
+or <i>restriction bias</i> for inductive learning from time series, and the metrics corresponding
+to their strengths. These are referred to as representation metrics because, as
+     documented in the first section (see Figure 1), the choice of representation is local to each</p>
+            <p><i>Table 1: Five time series representations and their prescriptive metrics</i></p>
+<p style="text-align: center;"><img src="images\Table.jpeg" alt="Description of the image"></p>
+                
+       <p style="text-align: justify;">node (subnetwork) in the hierarchy, corresponding to a single set within an attribute
+partition. The choice of hierarchical model is global over the partition, and the
+corresponding metrics are therefore called <i>representation metrics</i>. Note that this set may
+be an abstraction, or “merge,” of the lowest-level partition used, and is likely to be a
+refinement, or “split,” of the top-level (unpartitioned) set. The metrics are called
+           <i>prescriptive</i> because each one provides evidence in favor of a particular architecture.</p>     
+    <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The design rationale is that each metric is based on an attribute chosen to <i>correlate
+positively</i> (and, to the extent feasible, <i>uniquely</i>) with the <i>characteristic memory</i> form of
+a time series. A <i>memory</i> form as defined by Mozer (1994) is the representation of some
+specific temporal pattern, such as a limited-depth buffer, exponential trace, gamma
+        memory (Principé & Lefebvre, 2001), or state transition model.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;To model a time series as a stochastic process, one assumes that there is some
+mechanism that generates a random variable at each point in time. The random variables
+<i>X(t)</i> can be univariate or multivariate (corresponding to single and multiple attributes or
+<i>channels</i> of input per exemplar) and can take discrete or continuous values, and time can
+be either discrete or continuous. For clarity of exposition, the experiments focus on
+discrete classification problems with discrete time. The classification model is <i>generalized
+linear regression</i> (Neal, 1996), also known as a <i>1-of-C coding</i> (Sarle, 2002), or <i>local
+                coding</i> (Kohavi & John, 1997).</p>
+                <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Following the parameter estimation literature (Duda <i>et al</i>., 2000), time series learning can
+be defined as finding the parameters Θ = {θ1, …, θn} that describe the stochastic mechanism,
+typically by maximizing the likelihood that a set of realized or <i>observable</i> values, <i>{x(t1), x(t2),
+…, x(tk)}</i>, were actually generated by that mechanism. This corresponds to the backward, or
+maximization, step in the <i>expectation-maximization (EM)</i> algorithm (Duda <i>et al</i>., 2000).
+Forecasting with time series is accomplished by calculating the conditional density <i>P(X(t){Θ,
+{X(t - 1), …, X(t - m)}})</i>, when the stochastic mechanism and the parameters have been
+identified by the observable values <i>{x(t)}</i>. The order m of the stochastic mechanism can, in
+                    some cases, be infinite; in this case, one can only approximate the conditional density.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Despite recent developments with nonlinear models, some of the most common
+stochastic models used in time series learning are parametric linear models called
+<i>autoregressive (AR)</i>, <i>moving average (MA)</i>, and <i>autoregressive moving average
+                (ARMA)</i> processes.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;<i>MA</i> or moving average processes are the most straightforward to understand. First,
+let <i>{Z(t)}</i> be some fixed zero-mean, unit-variance “white noise” or “purely random”
+process (i.e., one for which <i>Cov[Z(ti), Z(tj)] = 1 iff ti = tj, 0</i>otherwise). <i>X(t)</i> is an <i>MA(q)</i>
+process, or “moving average process of order <i>q,” if x(t)=ΣβτZ(t-τ)</i>, where the <i>τ β</i> are
+constants. It follows that <i>E[X(t)]=0 and var[x(t)]=Σβτ</i>
+                  . Moving average processes are</p>
+            
+                
+            
+            
+            
+        </div>
+    </body>
+</html>
